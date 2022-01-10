@@ -16,6 +16,7 @@ public class Robot extends TimedRobot {
     WPI_VictorSPX rightBack = new WPI_VictorSPX(5);
     WPI_VictorSPX leftFront = new WPI_VictorSPX(0);
     WPI_VictorSPX leftBack = new WPI_VictorSPX(1);
+    WPI_VictorSPX armUp = new WPI_VictorSPX(2); 
     
     //set up our drivetrain mechanism
     DifferentialDrive driveTrain = new DifferentialDrive(leftFront, rightFront);
@@ -27,8 +28,8 @@ public class Robot extends TimedRobot {
     public void teleopPeriodic() {
 
       //read inputs from controller
-      double forw = -1 * driveController.getRawAxis(1); //positive is up
-      double turn = +1 * driveController.getRawAxis(4); //positive is right 
+      double forw = -0.75 * driveController.getRawAxis(1); //positive is up
+      double turn = +0.75 * driveController.getRawAxis(4); //positive is right 
    
       //set deadband on controller (this makes it so the sticks aren't super sensitive)
       if (Math.abs(forw) < 0.10) {
@@ -41,7 +42,14 @@ public class Robot extends TimedRobot {
       //take controller inputs and send them to our subsystem
       driveTrain.arcadeDrive(forw, turn);
 
+      //driveController.getRawButtonPressed(0); 
+      if (driveController.getRawButtonPressed(6)){
+        armUp.set(0.2);
+
+      }
+      
     }
+
 
     @Override
     public void robotInit() {
